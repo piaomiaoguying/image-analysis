@@ -27,6 +27,8 @@ class VisionManager:
 
     def _prepare_image_url(self, image_path: str) -> str:
         """准备图片 URL：本地文件转 Base64，网络 URL 直接返回"""
+        if image_path.startswith('data:'):
+            return image_path
         if self._is_local_file(image_path):
             ext = Path(image_path).suffix.lower()
             mime_type = {

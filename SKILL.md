@@ -9,7 +9,7 @@ description: 图片分析与识别，可分析本地图片和网络图片。适�
 ## 用法
 
 ```bash
-# 基础（--prompt 必须）
+# 分析剪贴板图片（不传 --image 时自动读取系统剪贴板）
 scripts/run.sh scripts/vision.py analyze --prompt "描述" --fallback
 
 # 指定图片
