@@ -1,6 +1,11 @@
 {
   "default_model": "zhipu",
   "providers": {
+    "volc-seed-evolving": {
+      "api_key": "your-api-key",
+      "model": "doubao-seed-evolving",
+      "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
+    },
     "volc-seed-2-0-pro": {
       "api_key": "your-api-key",
       "model": "doubao-seed-2-0-pro-260215",
@@ -9,11 +14,6 @@
     "volc-seed-2-1-turbo": {
       "api_key": "your-api-key",
       "model": "doubao-seed-2-1-turbo-260628",
-      "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
-    },
-    "volc-seed-evolving": {
-      "api_key": "your-api-key",
-      "model": "doubao-seed-evolving",
       "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
     },
     "volc-seed-2-0-lite": {
