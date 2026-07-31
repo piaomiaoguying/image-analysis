@@ -26,6 +26,11 @@
       "model": "doubao-seed-2-0-mini-260428",
       "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
     },
+    "volc-seed-2-0-pro": {
+      "api_key": "your-api-key",
+      "model": "doubao-seed-2-0-pro-260215",
+      "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
+    },
     "volc-seed-1-8": {
       "api_key": "your-api-key",
       "model": "doubao-seed-1-8-251228",
@@ -39,11 +44,6 @@
     "volc-1-5-vision": {
       "api_key": "your-api-key",
       "model": "doubao-1-5-vision-pro-32k-250115",
-      "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
-    },
-    "volc-seed-2-0-pro": {
-      "api_key": "your-api-key",
-      "model": "doubao-seed-2-0-pro-260215",
       "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
     },
     "volc-seed-1-6-vision": {
