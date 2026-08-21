@@ -1,6 +1,11 @@
 {
-  "default_model": "zhipu",
+  "default_model": "deepseek",
   "providers": {
+    "deepseek": {
+      "api_key": "your-deepseek-api-key",
+      "model": "deepseek-v4-flash-vision-exp",
+      "base_url": "https://api.deepseek.com/chat/completions"
+    },
     "volc-seed-evolving": {
       "api_key": "your-api-key",
       "model": "doubao-seed-evolving",
