@@ -185,6 +185,186 @@
       "api_key": "your-api-key",
       "model": "glm-4.6v-flash",
       "base_url": "https://open.bigmodel.cn/api/paas/v4/chat/completions"
+    },
+    "sf-kimi-k2-7-code-1": {
+      "api_key": "your-api-key",
+      "model": "moonshotai/Kimi-K2.7-Code",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-kimi-k2-7-code-2": {
+      "api_key": "your-api-key",
+      "model": "moonshotai/Kimi-K2.7-Code",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-kimi-k2-6-1": {
+      "api_key": "your-api-key",
+      "model": "Pro/moonshotai/Kimi-K2.6",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-kimi-k2-6-2": {
+      "api_key": "your-api-key",
+      "model": "Pro/moonshotai/Kimi-K2.6",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-nex-n2-pro-1": {
+      "api_key": "your-api-key",
+      "model": "nex-agi/Nex-N2-Pro",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-nex-n2-pro-2": {
+      "api_key": "your-api-key",
+      "model": "nex-agi/Nex-N2-Pro",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-5-397b-a17b-1": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3.5-397B-A17B",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-5-397b-a17b-2": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3.5-397B-A17B",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-5-27b-1": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3.5-27B",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-5-27b-2": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3.5-27B",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-5-9b-1": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3.5-9B",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-5-9b-2": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3.5-9B",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-paddleocr-vl-1-5-1": {
+      "api_key": "your-api-key",
+      "model": "PaddlePaddle/PaddleOCR-VL-1.5",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-paddleocr-vl-1-5-2": {
+      "api_key": "your-api-key",
+      "model": "PaddlePaddle/PaddleOCR-VL-1.5",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-vl-32b-instruct-1": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-VL-32B-Instruct",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-vl-32b-instruct-2": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-VL-32B-Instruct",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-vl-32b-thinking-1": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-VL-32B-Thinking",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-vl-32b-thinking-2": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-VL-32B-Thinking",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-vl-8b-instruct-1": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-VL-8B-Instruct",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-vl-8b-instruct-2": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-VL-8B-Instruct",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-vl-8b-thinking-1": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-VL-8B-Thinking",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-vl-8b-thinking-2": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-VL-8B-Thinking",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-vl-30b-a3b-instruct-1": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-VL-30B-A3B-Instruct",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-vl-30b-a3b-instruct-2": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-VL-30B-A3B-Instruct",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-vl-30b-a3b-thinking-1": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-VL-30B-A3B-Thinking",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-vl-30b-a3b-thinking-2": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-VL-30B-A3B-Thinking",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-omni-30b-a3b-instruct-1": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-Omni-30B-A3B-Instruct",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-omni-30b-a3b-instruct-2": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-Omni-30B-A3B-Instruct",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-omni-30b-a3b-thinking-1": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-Omni-30B-A3B-Thinking",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-omni-30b-a3b-thinking-2": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-Omni-30B-A3B-Thinking",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-omni-30b-a3b-captioner-1": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-Omni-30B-A3B-Captioner",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-qwen3-omni-30b-a3b-captioner-2": {
+      "api_key": "your-api-key",
+      "model": "Qwen/Qwen3-Omni-30B-A3B-Captioner",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-deepseek-ocr-1": {
+      "api_key": "your-api-key",
+      "model": "deepseek-ai/DeepSeek-OCR",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-deepseek-ocr-2": {
+      "api_key": "your-api-key",
+      "model": "deepseek-ai/DeepSeek-OCR",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-glm-4-5v-1": {
+      "api_key": "your-api-key",
+      "model": "zai-org/GLM-4.5V",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "sf-glm-4-5v-2": {
+      "api_key": "your-api-key",
+      "model": "zai-org/GLM-4.5V",
+      "base_url": "https://api.siliconflow.cn/v1/chat/completions"
     }
   }
 }
