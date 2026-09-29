@@ -380,6 +380,11 @@
       "api_key": "your-api-key",
       "model": "doubao-seed-1-6-251015",
       "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
+    },
+    "mimo-v2.6-flash": {
+      "api_key": "your-api-key",
+      "model": "mimo-v2.6-flash",
+      "base_url": "https://api.xiaomimimo.com/v1/chat/completions"
     }
   }
 }
