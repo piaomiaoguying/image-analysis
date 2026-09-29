@@ -16,6 +16,21 @@
       "model": "doubao-seed-2-1-turbo-260628",
       "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
     },
+    "volc-seed-2-1-lite": {
+      "api_key": "your-api-key",
+      "model": "doubao-seed-2-1-lite-260915",
+      "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
+    },
+    "volc-deepseek-v4-1-flash": {
+      "api_key": "your-api-key",
+      "model": "deepseek-v4-1-flash-260910",
+      "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
+    },
+    "volc-glm-5-3-flash": {
+      "api_key": "your-api-key",
+      "model": "glm-5-3-flash-260828",
+      "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
+    },
     "volc-seed-2-0-lite": {
       "api_key": "your-api-key",
       "model": "doubao-seed-2-0-lite-260428",
@@ -54,11 +69,6 @@
     "volc-seed-1-6-vision": {
       "api_key": "your-api-key",
       "model": "doubao-seed-1-6-vision-250815",
-      "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
-    },
-    "volc-seed-1-6": {
-      "api_key": "your-api-key",
-      "model": "doubao-seed-1-6-251015",
       "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
     },
     "sf-35b-1": {
@@ -365,6 +375,11 @@
       "api_key": "your-api-key",
       "model": "zai-org/GLM-4.5V",
       "base_url": "https://api.siliconflow.cn/v1/chat/completions"
+    },
+    "volc-seed-1-6": {
+      "api_key": "your-api-key",
+      "model": "doubao-seed-1-6-251015",
+      "base_url": "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
     }
   }
 }
