@@ -97,18 +97,54 @@ class VisionManager:
         if thinking and 'thinking' in features:
             payload["thinking"] = {"type": "enabled"}
 
-        if stream:
-            payload["stream"] = True
+        # 必须显式声明非流式：new-api 一类网关在既无 stream 字段、又无 Accept 头时
+        # 默认返回 text/event-stream，response.json() 会直接解析失败
+        payload["stream"] = bool(stream)
 
         headers = {
             "Authorization": f"Bearer {provider['api_key']}",
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Accept": "application/json"
         }
 
-        response = requests.post(provider['base_url'], headers=headers, json=payload)
+        timeout = provider.get('timeout', self.config.get('timeout', [5, 120]))
+        if isinstance(timeout, (int, float)):
+            timeout = (timeout, timeout)
+
+        response = requests.post(
+            provider['base_url'], headers=headers, json=payload, timeout=tuple(timeout)
+        )
         response.raise_for_status()
 
-        return response.json()
+        try:
+            result = response.json()
+        except ValueError:
+            ctype = response.headers.get('content-type', 'unknown')
+            raise RuntimeError(f"返回非 JSON（content-type={ctype}）")
+
+        if not self._extract_content(result).strip():
+            raise RuntimeError("返回空内容")
+
+        return result
+
+    @staticmethod
+    def _extract_content(result: Dict) -> str:
+        """取出首条回复的文本，取不到则返回空串"""
+        try:
+            content = result['choices'][0]['message']['content']
+        except (KeyError, IndexError, TypeError):
+            return ''
+        if isinstance(content, str):
+            return content
+        if isinstance(content, list):
+            parts = []
+            for item in content:
+                if isinstance(item, dict):
+                    parts.append(item.get('text') or '')
+                elif isinstance(item, str):
+                    parts.append(item)
+            return ''.join(parts)
+        return ''
 
     def analyze_with_fallback(
         self,
@@ -135,7 +171,7 @@ class VisionManager:
     def format_result(self, result: Dict, show_usage: bool = False, model_name: str = None) -> str:
         """格式化输出结果"""
         try:
-            content = result['choices'][0]['message']['content']
+            content = self._extract_content(result)
             prefix = f"[{model_name}] " if model_name else ""
             output = f"{prefix}分析结果：\n{content}"
 
