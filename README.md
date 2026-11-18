@@ -232,6 +232,7 @@ scripts/run.sh scripts/vision.py analyze \
 
 | Provider Key | 平台 | 模型 | 备注 |
 |---|---|---|---|
+| `volc-seed-2-1-turbo` | 火山引擎 | doubao-seed-2-1-turbo | 默认 |
 | `volc-seed-2-0-pro` | 火山引擎 | doubao-seed-2-0-pro | 旗舰 |
 | `volc-seed-2-0-lite` | 火山引擎 | doubao-seed-2-0-lite | 均衡 |
 | `volc-seed-2-0-mini` | 火山引擎 | doubao-seed-2-0-mini | 轻量 |
@@ -265,7 +266,7 @@ scripts/run.sh scripts/vision.py analyze \
 | `ali-kimi-k2.6` | 阿里百炼 | kimi-k2.6 | Kimi |
 | `ali-minimax-m2.5` | 阿里百炼 | MiniMax-M2.5 | MiniMax |
 | `sensenova` | 商汤 | sensenova-6.7-flash-lite | 轻量 |
-| `zhipu` | 智谱 | glm-4.6v-flash | 默认 |
+| `zhipu` | 智谱 | glm-4.6v-flash | |
 
 </details>
 
