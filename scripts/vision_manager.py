@@ -174,22 +174,18 @@ class VisionManager:
     ) -> Tuple[Dict, str]:
         """按配置顺序依次尝试 provider，返回第一个成功的结果。
 
-        每次尝试受 provider/config 的 timeout 约束；整条 fallback 链路另有
-        总时限（默认 60s）与最大尝试数（默认 12），避免前几个 provider 挂起时
-        整次识图看起来「卡死」。
+        每次尝试只受该 provider 的 timeout 约束，失败立即换下一个；尝试数量
+        不设上限，直到名单走完或用满 fallback_deadline_seconds（默认 600s）
+        总时限。
         """
         import time
 
-        deadline = float(self.config.get('fallback_deadline_seconds', 60))
-        max_attempts = int(self.config.get('fallback_max_attempts', 12))
+        deadline = float(self.config.get('fallback_deadline_seconds', 600))
         started = time.monotonic()
         errors = []
         tried = 0
 
         for name in self.providers:
-            if tried >= max_attempts:
-                print(f"  已达最大尝试数 {max_attempts}，停止 fallback")
-                break
             remaining = deadline - (time.monotonic() - started)
             if remaining <= 1:
                 print(f"  已用满 {deadline:.0f}s 总时限，停止 fallback")

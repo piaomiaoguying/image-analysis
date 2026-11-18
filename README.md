@@ -139,12 +139,11 @@ scripts/run.sh scripts/vision.py analyze \
 <td width="50%">
 
 ### ⏱️ 不会卡死
-单次请求受 `timeout` 约束；整条 fallback 链路另有总时限与最大尝试数，超时立刻报错，不会无休止地等。
+单次请求受 `timeout` 约束，失败立刻换下一个；整条 fallback 链路只受总时限约束，到点收手。
 
 ```json
 "timeout": [5, 45],
-"fallback_deadline_seconds": 60,
-"fallback_max_attempts": 12
+"fallback_deadline_seconds": 600
 ```
 
 </td>
@@ -290,13 +289,12 @@ scripts/run.sh scripts/vision.py analyze \
 
 部分 OpenAI 兼容网关（one-api / new-api 系）在请求既没有 `stream` 字段、又没有 `Accept: application/json` 时，会默认按 SSE 返回 `text/event-stream`，`response.json()` 会直接解析失败。本工具已显式发送 `"stream": false` 与 `Accept: application/json` 规避；若返回体不是 JSON 或 `content` 为空，同样视为失败并自动切换下一个 provider。
 
-超时默认 `[5, 45]`，即连接 5 秒、读取 45 秒。`--fallback` 整条链路默认最多耗时 60 秒、尝试 12 个 provider，超出即停止并汇总失败原因。均可在 `config.json` 顶层调整：
+超时默认 `[5, 45]`，即连接 5 秒、读取 45 秒。`--fallback` 按名单顺序不限次数尝试，直到成功、名单走完或用满总时限（默认 600 秒），随后汇总失败原因。均可在 `config.json` 顶层调整：
 
 ```json
 {
   "timeout": [5, 45],
-  "fallback_deadline_seconds": 60,
-  "fallback_max_attempts": 12
+  "fallback_deadline_seconds": 600
 }
 ```
 
