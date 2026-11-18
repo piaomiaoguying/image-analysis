@@ -312,6 +312,18 @@ scripts/run.sh scripts/vision.py analyze \
 
 > 💡 排在前面的 provider 决定了常态延迟，建议把响应快且输出稳定的模型放前排，把账号未开通、额度耗尽或接口已下线的一律放末尾。
 
+### 禁用 provider
+
+端点下线、额度耗尽或暂时不想用的模型，放进顶层 `disabled_providers` 即可，不必从 `providers` 中删除：
+
+```json
+{
+  "disabled_providers": ["zhipu", "sensenova"]
+}
+```
+
+也支持把 provider 整段配置搬进 `disabled_providers` 的字典写法（`{"zhipu": {...}}`），便于保留配置随时启用。被禁用的模型不参与 `--fallback`；用 `--model` 显式指定会直接报错。默认模型被禁用时，自动改用第一个可用 provider 并在输出中提示。
+
 ---
 
 ## 💡 设计哲学

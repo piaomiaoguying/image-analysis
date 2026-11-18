@@ -14,7 +14,25 @@ class VisionManager:
     def __init__(self, config: Dict):
         self.config = config
         self.default_model = config.get('default_model', 'zhipu')
-        self.providers = config.get('providers', {})
+
+        raw_providers = config.get('providers', {})
+        self.disabled = self._normalize_disabled(config.get('disabled_providers'))
+        self.providers = {k: v for k, v in raw_providers.items() if k not in self.disabled}
+        if not self.providers:
+            raise ValueError("没有可用的 provider：providers 为空或全部被 disabled_providers 禁用")
+
+    @staticmethod
+    def _normalize_disabled(value) -> set:
+        """把 disabled_providers 统一成名字集合，支持 {"名字": {...}} 与 ["名字", ...] 两种写法"""
+        if not value:
+            return set()
+        if isinstance(value, dict):
+            return {str(k) for k in value}
+        if isinstance(value, str):
+            return {value}
+        if isinstance(value, (list, tuple, set)):
+            return {str(v) for v in value}
+        return set()
 
     def _encode_image(self, image_path: str) -> str:
         """将本地图片转换为 base64"""
@@ -47,9 +65,11 @@ class VisionManager:
 
     def _get_provider(self, name: str) -> Dict:
         provider = self.providers.get(name)
-        if not provider:
-            raise ValueError(f"不支持的模型: {name}，可用模型: {', '.join(self.providers.keys())}")
-        return provider
+        if provider:
+            return provider
+        if name in self.disabled:
+            raise ValueError(f"模型 {name} 已被 disabled_providers 禁用，请先从配置中移除再使用")
+        raise ValueError(f"不支持的模型: {name}，可用模型: {', '.join(self.providers.keys())}")
 
     def analyze(
         self,
@@ -61,6 +81,9 @@ class VisionManager:
     ) -> Dict:
         """分析图片"""
         provider_name = model or self.default_model
+        if model is None and provider_name in self.disabled:
+            provider_name = next(iter(self.providers))
+            print(f"警告：默认模型 {self.default_model} 已被禁用，改用 {provider_name}")
         provider = self._get_provider(provider_name)
 
         # 构建消息内容

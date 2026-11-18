@@ -392,5 +392,6 @@
     45
   ],
   "fallback_deadline_seconds": 60,
-  "fallback_max_attempts": 12
+  "fallback_max_attempts": 12,
+  "disabled_providers": []
 }
