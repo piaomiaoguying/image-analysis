@@ -56,7 +56,6 @@ def main():
     analyze_parser.add_argument('--prompt', required=True, help='提示词')
     analyze_parser.add_argument('--model', help='指定模型（从 config.json 的 providers 中选择）')
     analyze_parser.add_argument('--fallback', action='store_true', help='按配置顺序依次尝试所有 provider，失败自动切换下一个')
-    analyze_parser.add_argument('--thinking', action='store_true', help='开启思考模式（需 provider 支持）')
     analyze_parser.add_argument('--json', action='store_true', help='JSON 格式输出')
     analyze_parser.add_argument('--show-usage', action='store_true', help='显示 token 使用情况')
     analyze_parser.add_argument('--config', help='配置文件路径')
@@ -86,15 +85,13 @@ def main():
                     print("警告：--fallback 模式下忽略 --model 参数")
                 result, model_name = manager.analyze_with_fallback(
                     prompt=args.prompt,
-                    images=args.image,
-                    thinking=args.thinking
+                    images=args.image
                 )
             else:
                 result = manager.analyze(
                     prompt=args.prompt,
                     images=args.image,
-                    model=args.model,
-                    thinking=args.thinking
+                    model=args.model
                 )
 
             if args.json:

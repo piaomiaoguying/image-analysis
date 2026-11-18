@@ -138,14 +138,14 @@ scripts/run.sh scripts/vision.py analyze \
 </td>
 <td width="50%">
 
-### 🧠 思考模式
-开启模型的深度思考能力：
+### ⏱️ 不会卡死
+单次请求受 `timeout` 约束；整条 fallback 链路另有总时限与最大尝试数，超时立刻报错，不会无休止地等。
 
-```bash
---thinking
+```json
+"timeout": [5, 45],
+"fallback_deadline_seconds": 60,
+"fallback_max_attempts": 12
 ```
-
-需要在 `config.json` 中给对应 provider 加上 `"features": ["thinking"]`，让模型先想清楚再回答，准确率直线飙升。
 
 </td>
 </tr>
@@ -207,11 +207,11 @@ scripts/run.sh scripts/vision.py analyze \
   --image before.jpg --image after.jpg \
   --prompt "对比两张图的差异" --fallback
 
-# 思考模式 + JSON 输出
+# JSON 输出
 scripts/run.sh scripts/vision.py analyze \
   --image screenshot.png \
   --prompt "这个 UI 有哪些可以改进的地方？" \
-  --thinking --json --fallback
+  --json --fallback
 
 # 指定特定模型
 scripts/run.sh scripts/vision.py analyze \
@@ -267,16 +267,6 @@ scripts/run.sh scripts/vision.py analyze \
 | `sensenova` | 商汤 | sensenova-6.7-flash-lite | 轻量 |
 | `zhipu` | 智谱 | glm-4.6v-flash | 默认 |
 
-> 💡 如需为某个 provider 开启思考模式，在 `config.json` 中加入 `"features": ["thinking"]`：
-> ```json
-> "zhipu": {
->   "api_key": "your-key",
->   "model": "glm-4.6v-flash",
->   "base_url": "https://open.bigmodel.cn/api/paas/v4/chat/completions",
->   "features": ["thinking"]
-> }
-> ```
-
 </details>
 
 ---
@@ -287,11 +277,11 @@ scripts/run.sh scripts/vision.py analyze \
 |---|---|
 | 📋 **剪贴板 OCR** | 截图后直接 `scripts/run.sh scripts/vision.py analyze --prompt "提取所有文字" --fallback` |
 | 🧾 **发票识别** | `scripts/run.sh scripts/vision.py analyze --image invoice.jpg --prompt "提取发票号码、金额、日期" --model zhipu` |
-| 🎨 **UI 审查** | `scripts/run.sh scripts/vision.py analyze --image mockup.png --prompt "审查设计问题" --thinking --fallback` |
+| 🎨 **UI 审查** | `scripts/run.sh scripts/vision.py analyze --image mockup.png --prompt "审查设计问题" --fallback` |
 | 📊 **图表分析** | `scripts/run.sh scripts/vision.py analyze --image chart.png --prompt "分析趋势并给出建议" --fallback` |
 | 🔬 **对比分析** | `scripts/run.sh scripts/vision.py analyze --image v1.png --image v2.png --prompt "列出所有差异" --fallback` |
 | 📸 **照片描述** | `scripts/run.sh scripts/vision.py analyze --image photo.jpg --prompt "详细描述场景、人物、氛围" --fallback` |
-| 🔍 **Bug 截图** | `scripts/run.sh scripts/vision.py analyze --image error.png --prompt "根据错误信息给出修复方案" --thinking --fallback` |
+| 🔍 **Bug 截图** | `scripts/run.sh scripts/vision.py analyze --image error.png --prompt "根据错误信息给出修复方案" --fallback` |
 
 ---
 
@@ -299,11 +289,13 @@ scripts/run.sh scripts/vision.py analyze \
 
 部分 OpenAI 兼容网关（one-api / new-api 系）在请求既没有 `stream` 字段、又没有 `Accept: application/json` 时，会默认按 SSE 返回 `text/event-stream`，`response.json()` 会直接解析失败。本工具已显式发送 `"stream": false` 与 `Accept: application/json` 规避；若返回体不是 JSON 或 `content` 为空，同样视为失败并自动切换下一个 provider。
 
-超时默认 `[5, 45]`，即连接 5 秒、读取 45 秒。可在 `config.json` 顶层调整：
+超时默认 `[5, 45]`，即连接 5 秒、读取 45 秒。`--fallback` 整条链路默认最多耗时 60 秒、尝试 12 个 provider，超出即停止并汇总失败原因。均可在 `config.json` 顶层调整：
 
 ```json
 {
-  "timeout": [5, 45]
+  "timeout": [5, 45],
+  "fallback_deadline_seconds": 60,
+  "fallback_max_attempts": 12
 }
 ```
 

@@ -19,7 +19,7 @@ scripts/run.sh scripts/vision.py analyze --image <路径|URL> --prompt "<提示�
 - 分析剪贴板图片：不传 `--image`，脚本自动读取系统剪贴板
 - 多图对比：重复 `--image`
 - 指定模型：`--model <provider名>`（默认 `--fallback` 按 config.json 顺序自动切换）
-- 其他：`--thinking`（思考模式，需 provider 支持）、`--json`（JSON 输出）、`--show-usage`（token 用量）
+- 其他：`--json`（JSON 输出）、`--show-usage`（token 用量）
 
 ## 规则
 

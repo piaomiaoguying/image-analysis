@@ -56,16 +56,12 @@ class VisionManager:
         prompt: str,
         images: Optional[List[str]] = None,
         model: Optional[str] = None,
-        thinking: bool = False,
-        stream: bool = False
+        stream: bool = False,
+        timeout: Optional[Tuple[float, float]] = None
     ) -> Dict:
         """分析图片"""
         provider_name = model or self.default_model
         provider = self._get_provider(provider_name)
-        features = provider.get('features', [])
-
-        if thinking and 'thinking' not in features:
-            print(f"警告：{provider_name} 不支持思考模式，将忽略该参数")
 
         # 构建消息内容
         content = []
@@ -94,9 +90,6 @@ class VisionManager:
             ]
         }
 
-        if thinking and 'thinking' in features:
-            payload["thinking"] = {"type": "enabled"}
-
         # 必须显式声明非流式：new-api 一类网关在既无 stream 字段、又无 Accept 头时
         # 默认返回 text/event-stream，response.json() 会直接解析失败
         payload["stream"] = bool(stream)
@@ -107,12 +100,16 @@ class VisionManager:
             "Accept": "application/json"
         }
 
-        timeout = provider.get('timeout', self.config.get('timeout', [5, 120]))
-        if isinstance(timeout, (int, float)):
-            timeout = (timeout, timeout)
+        if timeout is not None:
+            req_timeout = tuple(timeout)
+        else:
+            req_timeout = provider.get('timeout', self.config.get('timeout', [5, 120]))
+            if isinstance(req_timeout, (int, float)):
+                req_timeout = (req_timeout, req_timeout)
+            req_timeout = tuple(req_timeout)
 
         response = requests.post(
-            provider['base_url'], headers=headers, json=payload, timeout=tuple(timeout)
+            provider['base_url'], headers=headers, json=payload, timeout=req_timeout
         )
         response.raise_for_status()
 
@@ -150,23 +147,55 @@ class VisionManager:
         self,
         prompt: str,
         images: Optional[List[str]] = None,
-        thinking: bool = False,
         stream: bool = False
     ) -> Tuple[Dict, str]:
-        """按配置顺序依次尝试所有 provider，返回第一个成功的结果"""
+        """按配置顺序依次尝试 provider，返回第一个成功的结果。
+
+        每次尝试受 provider/config 的 timeout 约束；整条 fallback 链路另有
+        总时限（默认 60s）与最大尝试数（默认 12），避免前几个 provider 挂起时
+        整次识图看起来「卡死」。
+        """
+        import time
+
+        deadline = float(self.config.get('fallback_deadline_seconds', 60))
+        max_attempts = int(self.config.get('fallback_max_attempts', 12))
+        started = time.monotonic()
         errors = []
+        tried = 0
+
         for name in self.providers:
+            if tried >= max_attempts:
+                print(f"  已达最大尝试数 {max_attempts}，停止 fallback")
+                break
+            remaining = deadline - (time.monotonic() - started)
+            if remaining <= 1:
+                print(f"  已用满 {deadline:.0f}s 总时限，停止 fallback")
+                break
+
+            base = self.providers[name].get('timeout', self.config.get('timeout', [5, 120]))
+            if isinstance(base, (int, float)):
+                base = (base, base)
+            attempt_timeout = (min(float(base[0]), remaining), min(float(base[1]), remaining))
+
+            tried += 1
             sys.stdout.write(f"  尝试 {name}... ")
             sys.stdout.flush()
             try:
-                result = self.analyze(prompt, images, model=name, thinking=thinking, stream=stream)
-                print("OK")
+                result = self.analyze(
+                    prompt, images, model=name,
+                    stream=stream, timeout=attempt_timeout
+                )
+                print(f"OK ({time.monotonic() - started:.1f}s)")
                 return result, name
             except Exception as e:
                 msg = str(e)[:80]
                 print(f"失败 ({msg})")
                 errors.append((name, msg))
-        raise RuntimeError(f"所有 provider 均失败:\n" + "\n".join(f"  {n}: {e}" for n, e in errors))
+
+        raise RuntimeError(
+            f"所有 provider 均失败（已尝试 {tried} 个，耗时 {time.monotonic() - started:.1f}s）:\n"
+            + "\n".join(f"  {n}: {e}" for n, e in errors)
+        )
 
     def format_result(self, result: Dict, show_usage: bool = False, model_name: str = None) -> str:
         """格式化输出结果"""
